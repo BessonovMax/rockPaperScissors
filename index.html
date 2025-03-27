@@ -5,11 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RockPaperScissors</title>
     <link rel="stylesheet" href="main.css" />
+    <script src="memoize.js" defer></script>
   </head>
   <body>
-    <p>It's a small console game of RockPaperScissors.</p>
-    <p>Press F12 to open your console.</p>
-    <!-- purposely put script tag here to show paragraphs with info before browser parses JS file -->
-    <script src="main.js"></script>
+    <div class="container">
+      <div class="game">
+        <span>Rock_Paper_Scissors</span>
+        <div class="game_window"></div>
+        <span>Choose your fighter</span>
+        <div class="game_buttons">
+          <button id="rock" value="rock">rock</button>
+          <button id="paper" value="paper">paper</button>
+          <button id="scissors" value="scissors">scissors</button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
