@@ -10,8 +10,20 @@
   <body>
     <div class="container">
       <div class="game">
-        <span>Rock_Paper_Scissors</span>
-        <div class="game_window"></div>
+        <div class="game_wrapper">
+          <div class="score_table">
+            <div class="score_wrapper">
+              <div>your score:</div>
+              <div class="score" id="player_score">0</div>
+            </div>
+            <span>Rock_Paper_Scissors</span>
+            <div class="score_wrapper">
+              <div>computer score:</div>
+              <div class="score" id="computer_score">0</div>
+            </div>
+          </div>
+          <div class="game_window"></div>
+        </div>
         <span>Choose your fighter</span>
         <div class="game_buttons">
           <button id="rock" value="rock">rock</button>

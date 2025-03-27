@@ -4,49 +4,77 @@ const btn_rock = document.querySelector("#rock");
 const btn_paper = document.querySelector("#paper");
 const btn_scissors = document.querySelector("#scissors");
 
-btn_rock.addEventListener("click", () => playRound(btn_rock.value));
-btn_paper.addEventListener("click", () => playRound(btn_paper.value));
-btn_scissors.addEventListener("click", () => playRound(btn_scissors.value));
+const game_window = document.querySelector(".game_window");
+
+const player_score = document.querySelector("#player_score");
+const computer_score = document.querySelector("#computer_score");
+
+const asyncTimeout = (ms) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+};
 
 function getComputerChoice() {
   const choices = ["rock", "paper", "scissors"];
   return choices[Math.floor(Math.random() * choices.length)];
 }
+btn_rock.addEventListener("click", () =>
+  playGame(btn_rock.value, getComputerChoice())
+);
+btn_paper.addEventListener("click", () =>
+  playGame(btn_paper.value, getComputerChoice())
+);
+btn_scissors.addEventListener("click", () =>
+  playGame(btn_scissors.value, getComputerChoice())
+);
 
+function createNewDiv(content) {
+  const newDiv = document.createElement("div");
+  newDiv.textContent = content;
+  game_window.appendChild(newDiv);
+}
+
+let humanScore = 0;
+let computerScore = 0;
 function playGame() {
-  let humanScore = 0;
-  let computerScore = 0;
-}
-function playRound(humanChoice, computerChoice) {
-  console.log(`You chose ${humanChoice}`);
-  console.log(`Computer chose ${computerChoice}`);
-
-  if (humanChoice === computerChoice) {
-    return "It's a tie!";
+  async function playRound(humanChoice, computerChoice) {
+    createNewDiv(`You chose ${humanChoice}`);
+    await asyncTimeout(1000);
+    createNewDiv(`Computer chose ${computerChoice}`);
+    await asyncTimeout(1000);
+    if (humanChoice === computerChoice) {
+      createNewDiv("It's a tie!");
+      return;
+    }
+    const outcomes = {
+      rock: {
+        paper: "lose",
+        scissors: "win",
+      },
+      paper: {
+        rock: "win",
+        scissors: "lose",
+      },
+      scissors: {
+        rock: "lose",
+        paper: "win",
+      },
+    };
+    if (outcomes[humanChoice][computerChoice] === "win") {
+      ++humanScore;
+      player_score.textContent = humanScore;
+      createNewDiv(`You win! ${humanChoice} beats ${computerChoice}`);
+      await asyncTimeout(1000);
+    } else {
+      ++computerScore;
+      computer_score.textContent = computerScore;
+      createNewDiv(`You lose! ${computerChoice} beats ${humanChoice}`);
+      await asyncTimeout(1000);
+    }
   }
-  const outcomes = {
-    rock: {
-      paper: "lose",
-      scissors: "win",
-    },
-    paper: {
-      rock: "win",
-      scissors: "lose",
-    },
-    scissors: {
-      rock: "lose",
-      paper: "win",
-    },
-  };
-  if (outcomes[humanChoice][computerChoice] === "win") {
-    ++humanScore;
-    return `You win! ${humanChoice} beats ${computerChoice}`;
-  } else {
-    ++computerScore;
-    return `You lose! ${computerChoice} beats ${humanChoice}`;
-  }
+  playRound(...arguments);
 }
-
 /*  My shitty variant
 function getComputerChoice() {
   const choices = ["rock", "paper", "scissors"];
