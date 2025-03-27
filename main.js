@@ -1,65 +1,51 @@
 /* this one was with the help of GPT */
 
+const btn_rock = document.querySelector("#rock");
+const btn_paper = document.querySelector("#paper");
+const btn_scissors = document.querySelector("#scissors");
+
+btn_rock.addEventListener("click", () => playRound(btn_rock.value));
+btn_paper.addEventListener("click", () => playRound(btn_paper.value));
+btn_scissors.addEventListener("click", () => playRound(btn_scissors.value));
+
 function getComputerChoice() {
   const choices = ["rock", "paper", "scissors"];
   return choices[Math.floor(Math.random() * choices.length)];
 }
 
-function getHumanChoice() {
-  let choice;
-  do {
-    choice = prompt(
-      "Choose you fighter! Enter 'rock', 'paper' or 'scissors'"
-    ).toLowerCase();
-  } while (!["rock", "paper", "scissors"].includes(choice));
-  return choice;
-}
-
 function playGame() {
   let humanScore = 0;
   let computerScore = 0;
+}
+function playRound(humanChoice, computerChoice) {
+  console.log(`You chose ${humanChoice}`);
+  console.log(`Computer chose ${computerChoice}`);
 
-  function playRound(humanChoice, computerChoice) {
-    console.log(`You chose ${humanChoice}`);
-    console.log(`Computer chose ${computerChoice}`);
-
-    if (humanChoice === computerChoice) {
-      return "It's a tie!";
-    }
-    const outcomes = {
-      rock: {
-        paper: "lose",
-        scissors: "win",
-      },
-      paper: {
-        rock: "win",
-        scissors: "lose",
-      },
-      scissors: {
-        rock: "lose",
-        paper: "win",
-      },
-    };
-    if (outcomes[humanChoice][computerChoice] === "win") {
-      ++humanScore;
-      return `You win! ${humanChoice} beats ${computerChoice}`;
-    } else {
-      ++computerScore;
-      return `You lose! ${computerChoice} beats ${humanChoice}`;
-    }
+  if (humanChoice === computerChoice) {
+    return "It's a tie!";
   }
-  do {
-    console.log(playRound(getHumanChoice(), getComputerChoice()));
-    console.log(`You - ${humanScore} : Computer - ${computerScore}`);
-  } while (humanScore !== 5 && computerScore !== 5);
-  if (humanScore === 5) {
-    console.log("Congratulations! You won this game!");
+  const outcomes = {
+    rock: {
+      paper: "lose",
+      scissors: "win",
+    },
+    paper: {
+      rock: "win",
+      scissors: "lose",
+    },
+    scissors: {
+      rock: "lose",
+      paper: "win",
+    },
+  };
+  if (outcomes[humanChoice][computerChoice] === "win") {
+    ++humanScore;
+    return `You win! ${humanChoice} beats ${computerChoice}`;
   } else {
-    console.log("Sorry! You lost this one! Better luck next time!");
+    ++computerScore;
+    return `You lose! ${computerChoice} beats ${humanChoice}`;
   }
 }
-
-playGame();
 
 /*  My shitty variant
 function getComputerChoice() {
